@@ -11,7 +11,9 @@ SCISSORS = 3
 
 def parse_func(lines):
     moves = (line.split(" ") for line in lines)
-    yield from ((ord(move[0]) - ord('A') + 1, ord(move[1]) - ord('X') + 1) for move in moves)
+    yield from (
+        (ord(move[0]) - ord("A") + 1, ord(move[1]) - ord("X") + 1) for move in moves
+    )
 
 
 def calculate_move(line):
