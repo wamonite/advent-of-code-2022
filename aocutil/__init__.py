@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from collections.abc import Generator, Callable
-from typing import Any, Union
+from typing import Any, Optional
 
 
 Lines = Generator[str, None, None]
 ResultsFunc = Callable[[Generator[Any]], Any]
-ParseFunc = Callable[[Lines], Generator[Any]]
+ParseFunc = Callable[Any]  # TODO get Callable[[Lines], Generator[Any]] to work
 
 
 def load_file(file_name: str) -> Lines:
@@ -18,7 +18,7 @@ def print_results(
     file_name: str,
     results_func: ResultsFunc,
     *,
-    parse_func: Union[ParseFunc, None] = None,
+    parse_func: Optional[ParseFunc] = None,
     expected: Any = None,
 ):
     lines = load_file(file_name)
