@@ -1,38 +1,36 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from aocutil import print_results
+from aocutil import print_results, Lines
+from collections.abc import Generator
 
 
-def parse_func(lines):
+Pair = tuple[int, int]
+Pairs = tuple[Pair, Pair]
+PairGenerator = Generator[Pairs, None, None]
+
+
+def parse_func(lines: Lines) -> PairGenerator:
     for line in lines:
         yield [[int(v) for v in split_val.split("-")] for split_val in line.split(",")]
 
 
-def test_inside(p0, p1):
+def test_inside(p0: Pair, p1: Pair) -> bool:
     return p0[0] >= p1[0] and p0[1] <= p1[1]
 
 
-def results_1(lines):
-    count = 0
-    for pairs in lines:
-        if test_inside(pairs[0], pairs[1]) or test_inside(pairs[1], pairs[0]):
-            count += 1
-
-    return count
+def results_1(pairs: PairGenerator) -> int:
+    result = [p for p in pairs if test_inside(p[0], p[1]) or test_inside(p[1], p[0])]
+    return len(result)
 
 
-def test_overlap(p0, p1):
+def test_overlap(p0: Pair, p1: Pair) -> bool:
     return not (p0[1] < p1[0] or p0[0] > p1[1])
 
 
-def results_2(lines):
-    count = 0
-    for pairs in lines:
-        if test_overlap(pairs[0], pairs[1]):
-            count += 1
-
-    return count
+def results_2(pairs: PairGenerator) -> int:
+    result = [p for p in pairs if test_overlap(p[0], p[1])]
+    return len(result)
 
 
 def run():
