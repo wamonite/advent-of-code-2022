@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from aocutil import print_results, Lines
-from collections.abc import Generator
+from collections.abc import Generator, Callable
 from typing import Union
 from collections import deque
 
@@ -10,6 +10,7 @@ from collections import deque
 Stacks = list[deque]
 Moves = tuple[int, int, int]
 ParsedFile = Generator[Union[Stacks, Moves], None, None]
+InstructionFunc = Callable[[Stacks, int, int, int], None]
 Result = str
 
 
@@ -45,22 +46,38 @@ def parse_func(lines: Lines) -> ParsedFile:
             yield [int(i) for i in instruction[1::2]]
 
 
-def process_instruction(stacks, number, start, end):
-    for count in range(number):
-        container = stacks[start - 1].pop()
-        stacks[end - 1].append(container)
-
-
-def results_1(file_input: ParsedFile) -> Result:
+def results_return(file_input: ParsedFile, instruction_func: InstructionFunc) -> Result:
     stacks = None
     for val in file_input:
         if not stacks:
             stacks = val
 
         else:
-            process_instruction(stacks, *val)
+            instruction_func(stacks, *val)
 
     return "".join([s.pop() for s in stacks])
+
+
+def process_instruction_1(stacks, number, start, end):
+    for count in range(number):
+        container = stacks[start - 1].pop()
+        stacks[end - 1].append(container)
+
+
+def results_1(file_input: ParsedFile) -> Result:
+    return results_return(file_input, process_instruction_1)
+
+
+def process_instruction_2(stacks, number, start, end):
+    crane = deque()
+    for count in range(number):
+        crane.append(stacks[start - 1].pop())
+    for count in range(number):
+        stacks[end - 1].append(crane.pop())
+
+
+def results_2(file_input: ParsedFile) -> Result:
+    return results_return(file_input, process_instruction_2)
 
 
 def run():
@@ -71,6 +88,13 @@ def run():
         expected="CMZ",
     )
     print_results("data/day05.txt", results_1, parse_func=parse_func)
+    print_results(
+        "data/day05test.txt",
+        results_2,
+        parse_func=parse_func,
+        expected="MCD",
+    )
+    print_results("data/day05.txt", results_2, parse_func=parse_func)
 
 
 if __name__ == "__main__":
