@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v4.4.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
@@ -17,13 +17,14 @@ repos:
           - flake8-bugbear
           - flake8-builtins
           - flake8-comprehensions
+          - flake8-annotations
           - pep8-naming
   - repo: https://github.com/timothycrosley/isort
-    rev: "5.6.4"
+    rev: 5.10.1
     hooks:
       - id: isort
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.7.3
+    rev: v3.3.0
     hooks:
       - id: pyupgrade
         args:
