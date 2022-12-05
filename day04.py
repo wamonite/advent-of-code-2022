@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
-from aocutil import print_results, Lines
 from collections.abc import Generator
 
+from aocutil import Lines, print_results
 
 Pair = tuple[int, int]
 Pairs = tuple[Pair, Pair]
@@ -33,7 +32,7 @@ def results_2(pairs: PairGenerator) -> int:
     return len(result)
 
 
-def run():
+def run() -> None:
     print_results("data/day04test.txt", results_1, parse_func=parse_func, expected=2)
     print_results("data/day04.txt", results_1, parse_func=parse_func)
     print_results("data/day04test.txt", results_2, parse_func=parse_func, expected=4)

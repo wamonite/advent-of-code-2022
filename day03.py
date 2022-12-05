@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+
+from functools import reduce
 
 from aocutil import print_results
-from functools import reduce
 
 
 def conv_char(c):

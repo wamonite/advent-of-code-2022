@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-
-from collections.abc import Generator, Callable
+from collections.abc import Callable, Generator
 from typing import Any, Optional
-
 
 Lines = Generator[str, None, None]
 ResultsFunc = Callable[[Generator[Any]], Any]
@@ -20,7 +17,7 @@ def print_results(
     *,
     parse_func: Optional[ParseFunc] = None,
     expected: Any = None,
-):
+) -> None:
     lines = load_file(file_name)
     if parse_func and callable(parse_func):
         lines = parse_func(lines)

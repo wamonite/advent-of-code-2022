@@ -1,24 +1,16 @@
 [[package]]
-name = "black"
-version = "22.10.0"
-description = "The uncompromising code formatter."
+name = "attrs"
+version = "22.1.0"
+description = "Classes Without Boilerplate"
 category = "dev"
 optional = false
-python-versions = ">=3.7"
-
-[package.dependencies]
-click = ">=8.0.0"
-mypy-extensions = ">=0.4.3"
-pathspec = ">=0.9.0"
-platformdirs = ">=2"
-tomli = {version = ">=1.1.0", markers = "python_full_version < \"3.11.0a7\""}
-typing-extensions = {version = ">=3.10.0.0", markers = "python_version < \"3.10\""}
+python-versions = ">=3.5"
 
 [package.extras]
-colorama = ["colorama (>=0.4.3)"]
-d = ["aiohttp (>=3.7.4)"]
-jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
-uvloop = ["uvloop (>=0.15.2)"]
+dev = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "mypy (>=0.900,!=0.940)", "pytest-mypy-plugins", "zope.interface", "furo", "sphinx", "sphinx-notfound-page", "pre-commit", "cloudpickle"]
+docs = ["furo", "sphinx", "zope.interface", "sphinx-notfound-page"]
+tests = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "mypy (>=0.900,!=0.940)", "pytest-mypy-plugins", "zope.interface", "cloudpickle"]
+tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "mypy (>=0.900,!=0.940)", "pytest-mypy-plugins", "cloudpickle"]
 
 [[package]]
 name = "cfgv"
@@ -27,25 +19,6 @@ description = "Validate configuration and produce human readable error messages.
 category = "dev"
 optional = false
 python-versions = ">=3.6.1"
-
-[[package]]
-name = "click"
-version = "8.1.3"
-description = "Composable command line interface toolkit"
-category = "dev"
-optional = false
-python-versions = ">=3.7"
-
-[package.dependencies]
-colorama = {version = "*", markers = "platform_system == \"Windows\""}
-
-[[package]]
-name = "colorama"
-version = "0.4.6"
-description = "Cross-platform colored terminal text."
-category = "dev"
-optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 
 [[package]]
 name = "distlib"
@@ -81,6 +54,18 @@ pycodestyle = ">=2.10.0,<2.11.0"
 pyflakes = ">=3.0.0,<3.1.0"
 
 [[package]]
+name = "flake8-annotations"
+version = "2.9.1"
+description = "Flake8 Type Annotation Checks"
+category = "dev"
+optional = false
+python-versions = ">=3.7,<4.0"
+
+[package.dependencies]
+attrs = ">=21.4"
+flake8 = ">=3.7"
+
+[[package]]
 name = "flake8-commas"
 version = "2.1.0"
 description = "Flake8 lint for trailing commas."
@@ -90,6 +75,14 @@ python-versions = "*"
 
 [package.dependencies]
 flake8 = ">=2"
+
+[[package]]
+name = "flake8-pep585"
+version = "0.1.6"
+description = "flake8 plugin to enforce new-style type hints (PEP 585)"
+category = "dev"
+optional = false
+python-versions = ">=3.7,<4.0"
 
 [[package]]
 name = "identify"
@@ -111,28 +104,12 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
-name = "mypy-extensions"
-version = "0.4.3"
-description = "Experimental type system extensions for programs checked with the mypy typechecker."
-category = "dev"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "nodeenv"
 version = "1.7.0"
 description = "Node.js virtual environment builder"
 category = "dev"
 optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*"
-
-[[package]]
-name = "pathspec"
-version = "0.10.2"
-description = "Utility library for gitignore style pattern matching of file paths."
-category = "dev"
-optional = false
-python-versions = ">=3.7"
 
 [[package]]
 name = "platformdirs"
@@ -195,22 +172,6 @@ optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
-name = "tomli"
-version = "2.0.1"
-description = "A lil' TOML parser"
-category = "dev"
-optional = false
-python-versions = ">=3.7"
-
-[[package]]
-name = "typing-extensions"
-version = "4.4.0"
-description = "Backported and Experimental Type Hints for Python 3.7+"
-category = "dev"
-optional = false
-python-versions = ">=3.7"
-
-[[package]]
 name = "virtualenv"
 version = "20.17.0"
 description = "Virtual Python Environment builder"
@@ -230,28 +191,24 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ac226a8653d835cacf754fbfec95518935c795439dd27a65a9938e496f041cd2"
+content-hash = "d746bb7a373cda21d36c39b763ba99728b3603973f36bf71db5c989f6ca56aec"
 
 [metadata.files]
-black = []
+attrs = []
 cfgv = []
-click = []
-colorama = []
 distlib = []
 filelock = []
 flake8 = []
+flake8-annotations = []
 flake8-commas = []
+flake8-pep585 = []
 identify = []
 mccabe = []
-mypy-extensions = []
 nodeenv = []
-pathspec = []
 platformdirs = []
 pre-commit = []
 pycodestyle = []
 pyflakes = []
 pyyaml = []
 toml = []
-tomli = []
-typing-extensions = []
 virtualenv = []
