@@ -2,7 +2,7 @@ from collections.abc import Callable, Generator
 from typing import Any, Optional
 
 Lines = Generator[str, None, None]
-ResultsFunc = Callable[[Generator[Any]], Any]
+ResultsFunc = Callable[Any]
 ParseFunc = Callable[Any]  # TODO get Callable[[Lines], Generator[Any]] to work
 
 
