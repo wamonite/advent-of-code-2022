@@ -39,7 +39,7 @@ def parse_tree(lines: Iterator[str], tree: Optional[PathTree] = None) -> PathTre
 
 def sum_tree(
     tree: PathTree,
-    results: list[tuple[str, int]],
+    results: dict[str, int],
     path: Optional[Path] = None,
 ) -> int:
     total = 0
@@ -52,7 +52,7 @@ def sum_tree(
             total += value
 
     if path:
-        results.append((str(path), total))
+        results[str(path)] = total
 
     return total
 
@@ -62,9 +62,16 @@ def parse_func(lines: Lines) -> PathTree:
 
 
 def results_1(path_tree: PathTree) -> Result:
-    results = []
+    results = {}
     sum_tree(path_tree, results)
-    return sum([value[1] for value in results if value[1] <= 100000])
+    return sum([v for k, v in results.items() if v <= 100000])
+
+
+def results_2(path_tree: PathTree) -> Result:
+    results = {}
+    sum_tree(path_tree, results)
+    disk_unused = 70000000 - results["/"]
+    return min([v for k, v in results.items() if disk_unused + v > 30000000])
 
 
 def run() -> None:
@@ -75,6 +82,13 @@ def run() -> None:
         expected=95437,
     )
     print_results("data/day07.txt", results_1, parse_func=parse_func)
+    print_results(
+        "data/day07test.txt",
+        results_2,
+        parse_func=parse_func,
+        expected=24933642,
+    )
+    print_results("data/day07.txt", results_2, parse_func=parse_func)
 
 
 if __name__ == "__main__":
