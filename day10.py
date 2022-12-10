@@ -8,7 +8,6 @@ from dataclasses import dataclass
 from aocutil import Lines, print_results
 
 Command = tuple[str, int]
-Result = int
 
 
 def parse_func(lines: Lines) -> Generator[Command, None, None]:
@@ -49,7 +48,7 @@ class CPU:
         self.command_cycle += 1
 
 
-def results_1(commands: Generator[Command, None, None]) -> Result:
+def results_1(commands: Generator[Command, None, None]) -> int:
     ss_list = [60, 100, 140, 180, 220]
     ss_step = 20
     ss = 0
@@ -65,6 +64,23 @@ def results_1(commands: Generator[Command, None, None]) -> Result:
     return ss
 
 
+def results_2(commands: Generator[Command, None, None]) -> str:
+    crt = ""
+    row = 0
+    cpu = CPU()
+    while True:
+        x = cpu.cycle % 40
+        cpu.step(commands)
+        crt += "#" if x >= cpu.register - 1 and x <= cpu.register + 1 else "."
+        if cpu.cycle % 40 == 0:
+            crt += "\n"
+            row += 1
+            if row == 6:
+                break
+
+    return crt
+
+
 def run() -> None:
     print_results(
         "data/day10test.txt",
@@ -73,6 +89,19 @@ def run() -> None:
         expected=13140,
     )
     print_results("data/day10.txt", results_1, parse_func=parse_func)
+    print_results(
+        "data/day10test.txt",
+        results_2,
+        parse_func=parse_func,
+        expected="""##..##..##..##..##..##..##..##..##..##..
+###...###...###...###...###...###...###.
+####....####....####....####....####....
+#####.....#####.....#####.....#####.....
+######......######......######......####
+#######.......#######.......#######.....
+""",
+    )
+    print_results("data/day10.txt", results_2, parse_func=parse_func)
 
 
 if __name__ == "__main__":

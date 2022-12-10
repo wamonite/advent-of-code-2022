@@ -11,6 +11,14 @@ def load_file(file_name: str) -> Lines:
         yield from (line.rstrip() for line in file_object)
 
 
+def _format_value(value: Any) -> Any:
+    if not isinstance(value, str):
+        return value
+    if len(value.splitlines()) > 1:
+        return f"\n'\n{value}\n'"
+    return f"'{value}'"
+
+
 def print_results(
     file_name: str,
     results_func: ResultsFunc,
@@ -23,10 +31,10 @@ def print_results(
         lines = parse_func(lines)
     result = results_func(lines)
     suffix = (
-        f" {'=' if result == expected else '!='} {expected}"
+        f" {'=' if result == expected else '!='} {_format_value(expected)}"
         if expected is not None
         else ""
     )
-    print(f"{file_name}: {result}{suffix}")
+    print(f"{file_name}: {_format_value(result)}{suffix}")
     if expected is not None:
         assert result == expected
