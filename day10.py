@@ -5,6 +5,8 @@ from __future__ import annotations
 from collections.abc import Generator
 from dataclasses import dataclass
 
+from advent_of_code_ocr import convert_6
+
 from aocutil import Lines, print_results
 
 Command = tuple[str, int]
@@ -71,12 +73,18 @@ def results_2(commands: Generator[Command, None, None]) -> str:
     while True:
         x = cpu.cycle % 40
         cpu.step(commands)
-        crt += "#" if x >= cpu.register - 1 and x <= cpu.register + 1 else "."
+        crt += "#" if cpu.register - 1 <= x <= cpu.register + 1 else "."
         if cpu.cycle % 40 == 0:
-            crt += "\n"
             row += 1
             if row == 6:
                 break
+            crt += "\n"
+
+    try:
+        print(convert_6(crt))
+
+    except KeyError:
+        pass
 
     return crt
 
@@ -98,8 +106,7 @@ def run() -> None:
 ####....####....####....####....####....
 #####.....#####.....#####.....#####.....
 ######......######......######......####
-#######.......#######.......#######.....
-""",
+#######.......#######.......#######.....""",
     )
     print_results("data/day10.txt", results_2, parse_func=parse_func)
 

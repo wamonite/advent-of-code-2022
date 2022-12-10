@@ -1,4 +1,15 @@
 [[package]]
+name = "advent-of-code-ocr"
+version = "1.0.0"
+description = "Convert Advent of Code ASCII art"
+category = "main"
+optional = false
+python-versions = "~=3.7"
+
+[package.extras]
+test = ["numpy", "pytest"]
+
+[[package]]
 name = "cfgv"
 version = "3.3.1"
 description = "Validate configuration and produce human readable error messages."
@@ -117,9 +128,10 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "2f601565dad7a3ec38a8eb71a426ad6e8d834fd262450acd9ba334ac23d9358d"
+content-hash = "ec5dbadbb5d04f5bab2febfa0d1d42eda26377f73d2198a41697a4ff03333acf"
 
 [metadata.files]
+advent-of-code-ocr = []
 cfgv = []
 distlib = []
 filelock = []
