@@ -61,27 +61,35 @@ def parse_func(lines: Lines) -> list[Monkey]:
     return monkeys
 
 
-def results_1(monkeys: list[Monkey]) -> int:
+def calculate_rounds(monkeys: list[Monkey], relief: bool, rounds: int) -> int:
     count_activity = Counter()
-    for _ in range(20):
+    sm = prod([m.test_divisor for m in monkeys])
+    for _ in range(rounds):
         for idx, monkey in enumerate(monkeys):
             count_activity[idx] += len(monkey.items)
-            try:
-                while item := monkey.items.pop(0):
-                    test_val = item if monkey.test_val is None else monkey.test_val
-                    item = monkey.test_op(item, test_val)
+            for item in monkey.items:
+                test_val = item if monkey.test_val is None else monkey.test_val
+                item = monkey.test_op(item, test_val)
+                item %= sm
+                if relief:
                     item //= 3
-                    target = (
-                        monkey.target_true
-                        if item % monkey.test_divisor == 0
-                        else monkey.target_false
-                    )
-                    monkeys[target].items.append(item)
-
-            except IndexError:
-                pass
+                target = (
+                    monkey.target_true
+                    if item % monkey.test_divisor == 0
+                    else monkey.target_false
+                )
+                monkeys[target].items.append(item)
+            monkey.items = []
 
     return prod(sorted([v[1] for v in count_activity.items()])[-2:])
+
+
+def results_1(monkeys: list[Monkey]) -> int:
+    return calculate_rounds(monkeys, True, 20)
+
+
+def results_2(monkeys: list[Monkey]) -> int:
+    return calculate_rounds(monkeys, False, 10000)
 
 
 def run() -> None:
@@ -92,6 +100,13 @@ def run() -> None:
         expected=10605,
     )
     print_results("data/day11.txt", results_1, parse_func=parse_func)
+    print_results(
+        "data/day11test.txt",
+        results_2,
+        parse_func=parse_func,
+        expected=2713310158,
+    )
+    print_results("data/day11.txt", results_2, parse_func=parse_func)
 
 
 if __name__ == "__main__":
